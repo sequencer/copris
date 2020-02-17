@@ -1,4 +1,4 @@
-package jp.kobe_u.copris
+package copris
 
 /**
  * Case class for vectors of terms.
@@ -15,10 +15,10 @@ case class Vec(xs: Seq[Term]) extends Iterable[Term] {
   override def toSeq = xs
   /** Concatenates vectors */
   def ++(v: Vec) = Vec(xs ++ v.xs)
-  /** Negates the element terms (see [[jp.kobe_u.copris.Neg]]) */
+  /** Negates the element terms (see [[copris.Neg]]) */
   def unary_- =
     Vec(xs.map(Neg(_)))
-  /** Element-wise addition of vectors (see [[jp.kobe_u.copris.Add]]) */
+  /** Element-wise addition of vectors (see [[copris.Add]]) */
   def + (that: Vec) = {
     val pairs = xs.zipAll(that.xs, NIL, NIL)
     Vec(pairs.map {
@@ -27,7 +27,7 @@ case class Vec(xs: Seq[Term]) extends Iterable[Term] {
       case (x, y) => Add(x, y)
     })
   }
-  /** Element-wise subtraction of vectors (see [[jp.kobe_u.copris.Sub]]) */
+  /** Element-wise subtraction of vectors (see [[copris.Sub]]) */
   def - (that: Vec) = {
     val pairs = xs.zipAll(that.xs, NIL, NIL)
     Vec(pairs.map {
@@ -36,7 +36,7 @@ case class Vec(xs: Seq[Term]) extends Iterable[Term] {
       case (x, y) => Sub(x, y)
     })
   }
-  /** Element-wise multiplication of vectors (see [[jp.kobe_u.copris.Mul]]) */
+  /** Element-wise multiplication of vectors (see [[copris.Mul]]) */
   def * (that: Vec) = {
     val pairs = xs.zipAll(that.xs, NIL, NIL)
     Vec(pairs.map {
@@ -45,7 +45,7 @@ case class Vec(xs: Seq[Term]) extends Iterable[Term] {
       case (x, y) => Mul(x, y)
     })
   }
-  /** Element-wise division of vectors (see [[jp.kobe_u.copris.Div]]) */
+  /** Element-wise division of vectors (see [[copris.Div]]) */
   def / (that: Vec) = {
     val pairs = xs.zipAll(that.xs, NIL, NIL)
     Vec(pairs.map {
@@ -54,7 +54,7 @@ case class Vec(xs: Seq[Term]) extends Iterable[Term] {
       case (x, y) => Div(x, y)
     })
   }
-  /** Element-wise remainder of vectors (see [[jp.kobe_u.copris.Mod]]) */
+  /** Element-wise remainder of vectors (see [[copris.Mod]]) */
   def % (that: Vec) = {
     val pairs = xs.zipAll(that.xs, NIL, NIL)
     Vec(pairs.map {
@@ -63,7 +63,7 @@ case class Vec(xs: Seq[Term]) extends Iterable[Term] {
       case (x, y) => Mod(x, y)
     })
   }
-  /** Element-wise max of vectors (see [[jp.kobe_u.copris.Max]]) */
+  /** Element-wise max of vectors (see [[copris.Max]]) */
   def max(that: Vec) = {
     val pairs = xs.zipAll(that.xs, NIL, NIL)
     Vec(pairs.map {
@@ -72,7 +72,7 @@ case class Vec(xs: Seq[Term]) extends Iterable[Term] {
       case (x, y) => Max(x, y)
     })
   }
-  /** Element-wise min of vectors (see [[jp.kobe_u.copris.Min]]) */
+  /** Element-wise min of vectors (see [[copris.Min]]) */
   def min(that: Vec) = {
     val pairs = xs.zipAll(that.xs, NIL, NIL)
     Vec(pairs.map {
@@ -81,41 +81,41 @@ case class Vec(xs: Seq[Term]) extends Iterable[Term] {
       case (x, y) => Min(x, y)
     })
   }
-  /** Applies [[jp.kobe_u.copris.Add]] of the term for each element */
+  /** Applies [[copris.Add]] of the term for each element */
   def + (x: Term): Vec = Vec(xs.map(Add(_, x)))
-  /** Applies [[jp.kobe_u.copris.Add]] of the integer for each element */
+  /** Applies [[copris.Add]] of the integer for each element */
   def + (x: Int): Vec = this + Num(x)
-  /** Applies [[jp.kobe_u.copris.Sub]] of the term for each element */
+  /** Applies [[copris.Sub]] of the term for each element */
   def - (x: Term): Vec = Vec(xs.map(Sub(_, x)))
-  /** Applies [[jp.kobe_u.copris.Sub]] of the integer for each element */
+  /** Applies [[copris.Sub]] of the integer for each element */
   def - (x: Int): Vec = this - Num(x)
-  /** Applies [[jp.kobe_u.copris.Mul]] of the term for each element */
+  /** Applies [[copris.Mul]] of the term for each element */
   def * (x: Term): Vec = Vec(xs.map(Mul(_, x)))
-  /** Applies [[jp.kobe_u.copris.Mul]] of the integer for each element */
+  /** Applies [[copris.Mul]] of the integer for each element */
   def * (x: Int): Vec = this * Num(x)
-  /** Applies [[jp.kobe_u.copris.Div]] of the term for each element */
+  /** Applies [[copris.Div]] of the term for each element */
   def / (x: Term): Vec = Vec(xs.map(Div(_, x)))
-  /** Applies [[jp.kobe_u.copris.Div]] of the integer for each element */
+  /** Applies [[copris.Div]] of the integer for each element */
   def / (x: Int): Vec = this / Num(x)
-  /** Applies [[jp.kobe_u.copris.Mod]] of the term for each element */
+  /** Applies [[copris.Mod]] of the term for each element */
   def % (x: Term): Vec = Vec(xs.map(Mod(_, x)))
-  /** Applies [[jp.kobe_u.copris.Mod]] of the integer for each element */
+  /** Applies [[copris.Mod]] of the integer for each element */
   def % (x: Int): Vec = this % Num(x)
-  /** Applies [[jp.kobe_u.copris.Max]] of the term for each element */
+  /** Applies [[copris.Max]] of the term for each element */
   def max(x: Term): Vec = Vec(xs.map(Max(_, x)))
-  /** Applies [[jp.kobe_u.copris.Max]] of the integer for each element */
+  /** Applies [[copris.Max]] of the integer for each element */
   def max(x: Int): Vec = this max Num(x)
-  /** Applies [[jp.kobe_u.copris.Min]] of the term for each element */
+  /** Applies [[copris.Min]] of the term for each element */
   def min(x: Term): Vec = Vec(xs.map(Min(_, x)))
-  /** Applies [[jp.kobe_u.copris.Min]] of the integer for each element */
+  /** Applies [[copris.Min]] of the integer for each element */
   def min(x: Int): Vec = this min Num(x)
-  /** Returns [[jp.kobe_u.copris.Add]] of all elements */
+  /** Returns [[copris.Add]] of all elements */
   def sum = Add(xs: _*)
-  /** Returns [[jp.kobe_u.copris.Mul]] of all elements */
+  /** Returns [[copris.Mul]] of all elements */
   def prod = Mul(xs: _*)
-  /** Returns [[jp.kobe_u.copris.Min]] of all elements */
+  /** Returns [[copris.Min]] of all elements */
   def min = Min(xs: _*)
-  /** Returns [[jp.kobe_u.copris.Max]] of all elements */
+  /** Returns [[copris.Max]] of all elements */
   def max = Max(xs: _*)
   /** Returns dot product of vectors */
   def dot(that: Vec) = (this * that).sum
@@ -168,7 +168,7 @@ case class Matrix(vs: Seq[Vec]) extends Iterable[Vec] {
     Matrix(vs.toList.map(_.xs.toList).transpose.map(Vec(_)))
   /** Returns the flattened vector */
   def toVec = Vec(vs.flatten)
-  /** Negates the each element [[jp.kobe_u.copris.Neg]] */
+  /** Negates the each element [[copris.Neg]] */
   def unary_- = Matrix(vs.map(- _))
   /** Element-wise addition */
   def + (that: Matrix) =

@@ -1,15 +1,15 @@
-package jp.kobe_u.copris
+package copris
 
 /**
  * Trait for Copris DSL which provides methods for CSP and CSP solver.
  * This trait also provides implicit conversion of converting
- * scala Symbols to CSP integer variables ([[jp.kobe_u.copris.Var]]).
+ * scala Symbols to CSP integer variables ([[copris.Var]]).
  */
 trait CoprisTrait extends CSPTrait with SolverTrait {
   import scala.language.implicitConversions
-  /** Implicit conversion from scala Symbol to [[jp.kobe_u.copris.Var]]. */
+  /** Implicit conversion from scala Symbol to [[copris.Var]]. */
   implicit def symbol2var(s: Symbol) = Var(s.name)
-  // /** Implicit conversion from scala Symbol to [[jp.kobe_u.copris.Constraint]]. */
+  // /** Implicit conversion from scala Symbol to [[copris.Constraint]]. */
   // implicit def symbol2constraint(s: Symbol) = Ne(Var(s.name), ZERO)
   /** CSP to be used */
   def csp: CSP
@@ -75,10 +75,10 @@ trait CoprisTrait extends CSPTrait with SolverTrait {
  * @constructor Constructs Copris with the given CSP and solver
  */
 class Copris(val csp: CSP, var solver: AbstractSolver) extends CoprisTrait {
-  /** Constructs Copris with the given CSP and [[jp.kobe_u.copris.DefaultSolver]] */
+  /** Constructs Copris with the given CSP and [[copris.DefaultSolver]] */
   def this(csp: CSP) =
     this(csp, DefaultSolver(csp))
-  /** Constructs Copris with empty CSP and [[jp.kobe_u.copris.DefaultSolver]] */
+  /** Constructs Copris with empty CSP and [[copris.DefaultSolver]] */
   def this() =
     this(CSP())
   /** Changes the solver to be used */

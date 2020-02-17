@@ -1,4 +1,4 @@
-package jp.kobe_u.copris
+package copris
 
 import scala.collection._
 
@@ -117,17 +117,17 @@ trait SolverTrait {
   def solutions: Iterator[Solution]
 
   /** Returns the integer variable value of the current solution */
-  @deprecated("use apply method of [[jp.kobe_u.copris.Solution]] instead", "1.0.1")
+  @deprecated("use apply method of [[copris.Solution]] instead", "1.0.1")
   def value(x: Var): Int = solution.intValues(x)
   /** Returns the Boolean variable value of the current solution */
-  @deprecated("use apply method of [[jp.kobe_u.copris.Solution]] instead", "1.0.1")
+  @deprecated("use apply method of [[copris.Solution]] instead", "1.0.1")
   def value(p: Bool): Boolean = solution.boolValues(p)
   /** Returns the integer variable values of the current solution */
-  @deprecated("use apply method of [[jp.kobe_u.copris.Solution]] instead", "1.0.1")
+  @deprecated("use apply method of [[copris.Solution]] instead", "1.0.1")
   def values(x: Var, xs: Var*): Seq[Int] =
     value(x) +: xs.map(value(_))
   /** Returns the Boolean variable values of the current solution */
-  @deprecated("use apply method of [[jp.kobe_u.copris.Solution]] instead", "1.0.1")
+  @deprecated("use apply method of [[copris.Solution]] instead", "1.0.1")
   def values(p: Bool, ps: Bool*): Seq[Boolean] =
     value(p) +: ps.map(value(_))
 }
@@ -237,9 +237,9 @@ abstract class AbstractSolver(csp: CSP) extends SolverTrait {
   def findOptBoundBody(lb: Int, ub: Int): Boolean
   /* */
   def find = {
-    addSolverStat("csp", "variables", csp.variables.size)
-    addSolverStat("csp", "bools", csp.bools.size)
-    addSolverStat("csp", "constraints", csp.constraints.size)
+    addSolverStat("sugar/csp", "variables", csp.variables.size)
+    addSolverStat("sugar/csp", "bools", csp.bools.size)
+    addSolverStat("sugar/csp", "constraints", csp.constraints.size)
     measureTime("time", "find") {
       init
       val result = findBody
@@ -258,9 +258,9 @@ abstract class AbstractSolver(csp: CSP) extends SolverTrait {
   }
   /* */
   def findOpt = {
-    addSolverStat("csp", "variables", csp.variables.size)
-    addSolverStat("csp", "bools", csp.bools.size)
-    addSolverStat("csp", "constraints", csp.constraints.size)
+    addSolverStat("sugar/csp", "variables", csp.variables.size)
+    addSolverStat("sugar/csp", "bools", csp.bools.size)
+    addSolverStat("sugar/csp", "constraints", csp.constraints.size)
     measureTime("time", "findOpt") {
       init
       val result = findOptBody
@@ -275,8 +275,8 @@ abstract class AbstractSolver(csp: CSP) extends SolverTrait {
   /** Finds a solution within the given bounds */
   def findOptBound(lb: Int, ub: Int) = {
     shiftSolverStats
-    addSolverStat("csp", "lb", lb)
-    addSolverStat("csp", "ub", ub)
+    addSolverStat("sugar/csp", "lb", lb)
+    addSolverStat("sugar/csp", "ub", ub)
     measureTime("time", "findOptBound") {
       val result = findOptBoundBody(lb, ub)
       addSolverStat("result", "find", if (result) 1 else 0)
@@ -316,10 +316,10 @@ abstract class AbstractSolver(csp: CSP) extends SolverTrait {
 /**
  * Factory for default solver.
  *
- * [[jp.kobe_u.copris.sugar.Solver]] is returned as the default solver.
- * @see [[jp.kobe_u.copris.sugar.Solver]]
+ * [[copris.sugar.Solver]] is returned as the default solver.
+ * @see [[copris.sugar.Solver]]
  */
 object DefaultSolver {
   def apply(csp: CSP): AbstractSolver =
-    new sugar.Solver(csp)
+    new SMTSolverRunner(csp)
 }

@@ -1,4 +1,4 @@
-package jp.kobe_u.copris
+package copris
 
 import scala.collection._
 import scala.collection.immutable.IndexedSeq
@@ -6,7 +6,7 @@ import scala.collection.immutable.SortedSet
 
 /**
  * Abstract class of expressions.
- * [[jp.kobe_u.copris.Term]]s and [[jp.kobe_u.copris.Constraint]]s are expressions.
+ * [[copris.Term]]s and [[copris.Constraint]]s are expressions.
  */
 abstract class Expr {
   /** Returns an iterator of occuring variables */
@@ -23,66 +23,66 @@ abstract class Expr {
  * when `x` and `y` are terms.
  */
 sealed abstract class Term extends Expr {
-  /** Returns [[jp.kobe_u.copris.Neg]] of Term */
+  /** Returns [[copris.Neg]] of Term */
   def unary_- = Neg(this)
-  /** Returns [[jp.kobe_u.copris.Add]] of Terms */
+  /** Returns [[copris.Add]] of Terms */
   def + (x: Term) = Add(this, x)
-  /** Returns [[jp.kobe_u.copris.Add]] of Term with Int */
+  /** Returns [[copris.Add]] of Term with Int */
   def + (a: Int) = Add(this, Num(a))
-  /** Returns [[jp.kobe_u.copris.Sub]] of Terms */
+  /** Returns [[copris.Sub]] of Terms */
   def - (x: Term) = Sub(this, x)
-  /** Returns [[jp.kobe_u.copris.Sub]] of Term with Int */
+  /** Returns [[copris.Sub]] of Term with Int */
   def - (a: Int) = Sub(this, Num(a))
-  /** Returns [[jp.kobe_u.copris.Mul]] of Terms */
+  /** Returns [[copris.Mul]] of Terms */
   def * (x: Term) = Mul(this, x)
-  /** Returns [[jp.kobe_u.copris.Mul]] of Term with Int */
+  /** Returns [[copris.Mul]] of Term with Int */
   def * (a: Int) = Mul(this, Num(a))
-  /** Returns [[jp.kobe_u.copris.Div]] of Terms */
+  /** Returns [[copris.Div]] of Terms */
   def / (x: Term) = Div(this, x)
-  /** Returns [[jp.kobe_u.copris.Div]] of Term by Int */
+  /** Returns [[copris.Div]] of Term by Int */
   def / (a: Int) = Div(this, Num(a))
-  /** Returns [[jp.kobe_u.copris.Mod]] of Terms */
+  /** Returns [[copris.Mod]] of Terms */
   def % (x: Term) = Mod(this, x)
-  /** Returns [[jp.kobe_u.copris.Mod]] of Term by Int */
+  /** Returns [[copris.Mod]] of Term by Int */
   def % (a: Int) = Mod(this, Num(a))
-  /** Returns [[jp.kobe_u.copris.Max]] of Terms */
+  /** Returns [[copris.Max]] of Terms */
   def max (x: Term) = Max(this, x)
-  /** Returns [[jp.kobe_u.copris.Max]] of Term and Int */
+  /** Returns [[copris.Max]] of Term and Int */
   def max (a: Int) = Max(this, Num(a))
-  /** Returns [[jp.kobe_u.copris.Min]] of Terms */
+  /** Returns [[copris.Min]] of Terms */
   def min (x: Term) = Min(this, x)
-  /** Returns [[jp.kobe_u.copris.Min]] of Term and Int */
+  /** Returns [[copris.Min]] of Term and Int */
   def min (a: Int) = Min(this, Num(a))
 
-  /** Returns [[jp.kobe_u.copris.Eq]] of Terms */
+  /** Returns [[copris.Eq]] of Terms */
   def === (x: Term) = Eq(this, x)
-  /** Returns [[jp.kobe_u.copris.Eq]] of Term and Int */
+  /** Returns [[copris.Eq]] of Term and Int */
   def === (a: Int) = Eq(this, Num(a))
-  /** Returns [[jp.kobe_u.copris.Ne]] of Terms */
+  /** Returns [[copris.Ne]] of Terms */
   @deprecated("use =/= instead", "2.2.0")
   def !== (x: Term) = Ne(this, x)
-  /** Returns [[jp.kobe_u.copris.Ne]] of Term and Int */
+  /** Returns [[copris.Ne]] of Term and Int */
   @deprecated("use =/= instead", "2.2.0")
   def !== (a: Int) = Ne(this, Num(a))
-  /** Returns [[jp.kobe_u.copris.Ne]] of Terms */
+  /** Returns [[copris.Ne]] of Terms */
   def =/= (x: Term) = Ne(this, x)
-  /** Returns [[jp.kobe_u.copris.Ne]] of Term and Int */
+  /** Returns [[copris.Ne]] of Term and Int */
   def =/= (a: Int) = Ne(this, Num(a))
-  /** Returns [[jp.kobe_u.copris.Le]] of Terms */
+  /** Returns [[copris.Le]] of Terms */
   def <= (x: Term) = Le(this, x)
-  /** Returns [[jp.kobe_u.copris.Le]] of Term and Int */
+  /** Returns [[copris.Le]] of Term and Int */
   def <= (a: Int) = Le(this, Num(a))
-  /** Returns [[jp.kobe_u.copris.Lt]] of Terms */
+  /** Returns [[copris.Lt]] of Terms */
   def < (x: Term) = Lt(this, x)
-  /** Returns [[jp.kobe_u.copris.Lt]] of Term and Int */
+  /** Returns [[copris.Lt]] of Term and Int */
   def < (a: Int) = Lt(this, Num(a))
-  /** Returns [[jp.kobe_u.copris.Ge]] of Terms */
+  /** Returns [[copris.Ge]] of Terms */
   def >= (x: Term) = Ge(this, x)
-  /** Returns [[jp.kobe_u.copris.Ge]] of Term and Int */
+  /** Returns [[copris.Ge]] of Term and Int */
   def >= (a: Int) = Ge(this, Num(a))
-  /** Returns [[jp.kobe_u.copris.Gt]] of Terms */
+  /** Returns [[copris.Gt]] of Terms */
   def > (x: Term) = Gt(this, x)
-  /** Returns [[jp.kobe_u.copris.Gt]] of Term and Int */
+  /** Returns [[copris.Gt]] of Term and Int */
   def > (a: Int) = Gt(this, Num(a))
   /** Returns this >= 1 */
   def ? = Ge(this, ONE)
@@ -305,17 +305,17 @@ case class If(c: Constraint, x0: Term, x1: Term) extends Term {
  * when `c` and `d` are constraints.
  */
 sealed abstract class Constraint extends Expr {
-  /** Returns [[jp.kobe_u.copris.Not]] of Constraint */
+  /** Returns [[copris.Not]] of Constraint */
   def unary_! = Not(this)
-  /** Returns [[jp.kobe_u.copris.And]] of Constraints */
+  /** Returns [[copris.And]] of Constraints */
   def && (c: Constraint) = And(this, c)
-  /** Returns [[jp.kobe_u.copris.Or]] of Constraints */
+  /** Returns [[copris.Or]] of Constraints */
   def || (c: Constraint) = Or(this, c)
-  /** Returns [[jp.kobe_u.copris.Imp]] of Constraints */
+  /** Returns [[copris.Imp]] of Constraints */
   def ==> (c: Constraint) = Imp(this, c)
-  /** Returns [[jp.kobe_u.copris.Xor]] of Constraints */
+  /** Returns [[copris.Xor]] of Constraints */
   def ^ (c: Constraint) = Xor(this, c)
-  /** Returns [[jp.kobe_u.copris.Iff]] of Constraints */
+  /** Returns [[copris.Iff]] of Constraints */
   def <==> (c: Constraint) = Iff(this, c)
   /** Returns If(this, 1, 0) */
   def toInt = If(this, ONE, ZERO)
@@ -759,13 +759,13 @@ case class SetDomain(values: SortedSet[Int]) extends Domain {
  * Factory for creating domains.
  */
 object Domain {
-  /** Returns [[jp.kobe_u.copris.IntervalDomain]] */
+  /** Returns [[copris.IntervalDomain]] */
   def apply(lo: Int, hi: Int) =
     IntervalDomain(lo, hi)
-  /** Returns [[jp.kobe_u.copris.IntervalDomain]] with singleton value */
+  /** Returns [[copris.IntervalDomain]] with singleton value */
   def apply(value: Int) =
     IntervalDomain(value, value)
-  /** Returns [[jp.kobe_u.copris.SetDomain]] */
+  /** Returns [[copris.SetDomain]] */
   def apply(values: Set[Int]) =
     SetDomain(SortedSet(values.toSeq: _*))
 }
