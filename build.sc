@@ -5,10 +5,6 @@ import coursier.maven.MavenRepository
 object copris extends ScalaModule {
   def scalaVersion = "2.12.10"
 
-  //def unmanagedClasspath = T {
-  //  Agg.from(ammonite.ops.ls(millSourcePath / "lib").map(PathRef(_)))
-  //}
-
   def mainClass = Some("org.sat4j.BasicLauncher")
 
   def repositories = super.repositories ++ Seq(
@@ -22,6 +18,12 @@ object copris extends ScalaModule {
   )
  
   override def moduleDeps = Seq(sugar)
+
+  object tests extends Tests {
+    def ivyDeps = Agg(ivy"com.lihaoyi::utest:0.7.1")
+
+    def testFrameworks = Seq("utest.runner.Framework")
+  }
 }
 
 object sugar extends JavaModule {
